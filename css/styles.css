@@ -1,0 +1,635 @@
+/* Variables de color */
+:root {
+    --oro: #daa520;
+    --oro-claro: #ffd700;
+    --blanco: #ffffff;
+    --negro: #000000;
+}
+
+/* Reset básico */
+body, h1, h2, h3, p, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--negro);
+    background-color: var(--blanco);
+}
+
+/* Header */
+header {
+    background-color: var(--blanco);
+    text-align: center;
+    padding: 1em 0;
+    position: relative;
+    width: 100%; /* Aseguramos que ocupe todo el ancho */
+    box-sizing: border-box;
+}
+
+/* Mover menu-superior a la derecha de forma más explícita */
+.menu-superior {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    text-align: right; /* Asegura alineación a la derecha */
+    width: auto; /* Permite que se ajuste al contenido */
+    z-index: 900; /* Para que esté por encima de otros elementos pero debajo del botón */
+}
+
+/* Alinear claramente los elementos de navegación a la derecha */
+.nav-header {
+    display: flex;
+    justify-content: flex-end; /* Alinea todo el contenido a la derecha */
+}
+
+.nav-header ul {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+    margin: 0;
+    padding: 0;
+}
+
+/* También intentemos con la clase en caso de que esté usando ambos */
+.menu-button {
+    position: fixed !important;
+    top: 1em !important;
+    left: 1em !important;
+    right: auto !important;
+    cursor: pointer;
+    z-index: 999;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    margin: 0 !important;
+    padding: 0.3em !important;
+    display: block !important;
+    transform: none !important;
+}
+
+.menu-superior {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+.nav-header ul {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end; /* Alinea los items a la derecha */
+}
+
+.nav-header a {
+    text-decoration: none;
+    color: var(--negro);
+    font-weight: bold;
+}
+
+.logo {
+    width: 120px;
+    margin: 0.5em auto;
+}
+
+.slogan {
+    font-style: italic;
+    color: var(--oro);
+    margin-top: 0.5em;
+}
+
+/* Imagen de fondo */
+.hero-fondo {
+    height: 400px;
+    background-image: url("../img/fondo-reloj.png");
+    background-size: cover;
+    background-position: center;
+}
+
+/* Contenido principal mejorado */
+.contenido-principal {
+    display: flex;
+    justify-content: space-between;
+    padding: 3em 2em;
+    gap: 3em;
+    background-color: #f9f9f9; /* Fondo sutil */
+}
+
+/* Sección de catálogo mejorada */
+.catalogo-boton {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    background: linear-gradient(to bottom, #fff 0%, #f5f5f5 100%);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.catalogo-boton:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(218, 165, 32, 0.2);
+}
+
+/* Efecto de brillo al pasar el mouse */
+.catalogo-boton::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 80%);
+    opacity: 0;
+    transform: rotate(30deg);
+    transition: opacity 0.3s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+.catalogo-boton:hover::before {
+    opacity: 0.8;
+    transform: rotate(0deg);
+    animation: shine 1.5s ease;
+}
+
+/* Título de la sección */
+.catalogo-titulo {
+    font-size: 1.8em;
+    color: var(--oro);
+    margin-bottom: 0.8em;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 0.5em;
+}
+
+.catalogo-titulo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--oro), transparent);
+}
+
+/* Descripción elegante */
+.catalogo-descripcion {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 2em;
+    font-size: 1.1em;
+    max-width: 600px;
+    position: relative;
+}
+
+/* Resaltar palabras clave */
+.catalogo-descripcion strong {
+    color: var(--oro);
+    font-weight: 600;
+}
+
+/* Botón mejorado */
+.boton-explorar {
+    background: linear-gradient(135deg, var(--oro) 0%, var(--oro-claro) 100%);
+    color: var(--blanco);
+    padding: 1em 2.5em;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+    z-index: 1;
+}
+
+.boton-explorar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.7s ease;
+    z-index: -1;
+}
+
+.boton-explorar:hover {
+    background: linear-gradient(135deg, var(--oro-claro) 0%, var(--oro) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(218, 165, 32, 0.4);
+}
+
+.boton-explorar:hover::before {
+    left: 100%;
+    animation: shine 1.5s infinite;
+}
+
+.boton-explorar:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(218, 165, 32, 0.3);
+}
+
+/* Animación de brillo */
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    20% {
+        left: 100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Slider */
+.slider {
+    flex: 1;
+    max-width: 600px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.slider img {
+    width: 100%;
+    height: auto;
+    display: none;
+    transition: opacity 1s ease-in-out;
+    border-radius: 12px;
+}
+
+.slider img.activo {
+    display: block;
+    opacity: 1;
+}
+
+.slider button.prev,
+.slider button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--blanco);
+    border: none;
+    padding: 0.7em 1em;
+    cursor: pointer;
+    font-size: 1.5em;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.slider button.prev:hover,
+.slider button.next:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.slider .prev {
+    left: 10px;
+}
+
+.slider .next {
+    right: 10px;
+}
+
+.frase-final {
+    text-align: center;
+    padding: 2em;
+    background-color: var(--oro);
+    color: var(--blanco);
+    font-size: 1.2em;
+    font-weight: bold;
+    position: relative; /* necesario para posicionar el ::after */
+}
+
+.frase-final::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, rgb(73, 68, 38), var(--oro));
+}
+
+
+
+/* Footer */
+footer {
+    background-color: var(--negro);
+    color: var(--blanco);
+    text-align: center;
+    padding: 1em;
+}
+
+.logo-footer {
+    height: 20px;
+    vertical-align: middle;
+}
+
+/* Off-canvas con diseño mejorado */
+.offcanvas {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Aumentamos el ancho un poco */
+    width: 300px;
+    height: 100%;
+    background: linear-gradient(135deg, var(--oro) 0%, var(--oro-claro) 100%); /* Gradiente elegante */
+    padding: 2em 1.5em;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Animación suave con rebote */
+    z-index: 1000;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra para dar profundidad */
+    overflow-y: auto; /* Permitir scroll si el contenido es largo */
+}
+
+.offcanvas.abierto {
+    left: 0;
+    animation: fadeIn 0.5s ease forwards; /* Animación de fade-in */
+}
+
+/* Botón para cerrar el offcanvas */
+.offcanvas button {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.8em;
+    color: var(--blanco);
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.offcanvas button:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: rotate(90deg); /* Efecto de rotación al pasar el mouse */
+}
+
+/* Estilo para los elementos de navegación */
+.offcanvas nav {
+    margin-top: 3em;
+}
+
+.offcanvas nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.offcanvas nav ul li {
+    opacity: 0; /* Comienza invisible para animación */
+    transform: translateX(-20px); /* Comienza desplazado */
+    transition: all 0.3s ease;
+}
+
+.offcanvas.abierto nav ul li {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Retraso escalonado para cada elemento del menú */
+.offcanvas nav ul li:nth-child(1) { transition-delay: 0.1s; }
+.offcanvas nav ul li:nth-child(2) { transition-delay: 0.2s; }
+.offcanvas nav ul li:nth-child(3) { transition-delay: 0.3s; }
+.offcanvas nav ul li:nth-child(4) { transition-delay: 0.4s; }
+.offcanvas nav ul li:nth-child(5) { transition-delay: 0.5s; }
+
+.offcanvas nav ul li a {
+    display: block;
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.2em;
+    padding: 0.8em 0.5em;
+    margin: 0.3em 0;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    border-left: 0px solid rgba(255, 255, 255, 0);
+}
+
+.offcanvas nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    padding-left: 1em;
+    border-left: 4px solid var(--blanco);
+}
+
+/* Separador decorativo entre elementos */
+.offcanvas nav ul li:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Título para el menú */
+.offcanvas-title {
+    color: var(--blanco);
+    margin-bottom: 1.5em;
+    font-size: 1.5em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Fondo oscuro para cuando el offcanvas está abierto */
+.offcanvas-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 999;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+}
+
+.offcanvas.abierto + .offcanvas-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: auto;
+}
+.contenedor-principal {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .columna-izquierda, .columna-derecha {
+    flex: 1;
+  }
+  .tarjeta-vision {
+    margin-top: 2rem;
+    background: #daa520;
+    padding: 1.5rem;
+    border-left: 4px solid #8b735b;
+    border-radius: 6px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.05);
+  }
+  
+  .titulo-tarjeta {
+    font-family: 'Georgia', serif;
+    font-size: 1.4rem;
+    color: #fffb00;
+    margin-bottom: 0.8rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.3rem;
+    text-shadow: 1px 1px 5px #33ff00;
+    animation: brillar 2s infinite alternate;
+  }
+  
+  .contenido-tarjeta {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #444;
+    text-align: justify;
+  }
+  
+  .nombre-empresa {
+    font-size: 3rem;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #daa520;
+    text-shadow: 1px 1px 5px #45da20;
+    animation: brillar 2s infinite alternate;
+    text-align: center;
+  }
+  
+  @keyframes brillar {
+    from { opacity: 0.7; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.05); }
+  }
+  .descripcion-empresa {
+    font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #444;
+    margin-top: 1rem;
+    text-align: justify;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1.2rem;
+    border-left: 4px solid #bfa76f;
+    border-radius: 6px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.05);
+  }
+  
+  button#toggleGaleria {
+    padding: 0.5em 1em;
+    background-color: #bfa76f;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+  
+  .galeria {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .reloj-item {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+  
+  .reloj-item img {
+    width: 100px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+  }
+  
+  .oculto {
+    display: none;
+  }
+  
+/* Animación de fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0.5;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.footer-principal {
+    background-color: #daa520;
+    color: black;
+    padding: 2rem 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .footer-contenido {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-col h4 {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border-bottom: 2px solid black;
+    padding-bottom: 0.5rem;
+  }
+  
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-col ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-col ul li a {
+    text-decoration: none;
+    color: black;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-col ul li a:hover {
+    color: white;
+  }
+  
+  .logo-footer {
+    max-width: 100px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-derechos {
+    text-align: center;
+    border-top: 1px solid black;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
