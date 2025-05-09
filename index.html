@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Watch Club MX - Relojería de Lujo</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="./img/clock-regular.svg">
 </head>
 <body>
 
@@ -25,7 +26,7 @@
     <!-- Header -->
     <header>
         <div class="menu-superior">
-            <button id="menu-button">☰</button>
+            <button id="menu-button" class="menu-button">☰</button>
             <nav class="nav-header">
                 <ul>
                     <li><a href="vistas/quienes.html">Quienes somos</a></li>
@@ -37,15 +38,19 @@
             </nav>
         </div>
         <div class="logo-container">
-            <img src="./img/20250508_2209_Logo Watch Club MX_simple_compose_01jtrr6809fh9bpbr3h6j5svbx.png" alt="Logo Watch Club MX" class="logo">
+            <img src="./img/logo.webp" alt="Logo Watch Club MX" class="logo">
             <h1 class="slogan">No midas minutos, marca legado</h1>
         </div>
     </header>
 
-    <!-- Imagen de fondo (editable) -->
-    <section class="hero-fondo">
-        <!-- imagen de fondo desde CSS -->
-    </section>
+    <div id="video-contenedor">
+        <iframe width="100%" height="405"
+        src="https://www.youtube.com/embed/yw2FiUH9PTM?autoplay=1&mute=1&loop=1&playlist=yw2FiUH9PTM" 
+        title="YouTube video player" frameborder="0"
+        allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+      </div>
+      
 
     <!-- Sección de exploración + slider -->
     <section class="contenido-principal">
@@ -60,7 +65,7 @@
             <button class="next">&#10095;</button>
         </div>
     </section>
-
+    
     <!-- Frase destacada -->
     <section class="frase-final">
         <p>Hecho para los que no siguen el tiempo, lo dominan</p>
@@ -70,7 +75,7 @@
         <div class="footer-contenido">
           <div class="footer-col">
             <h4>Compartir</h4>
-            <img src="./img/20250508_2209_Logo Watch Club MX_simple_compose_01jtrr6809fh9bpbr3h6j5svbx.png" alt="Logo Footer" class="logo-footer">
+            <img src="./img/logo.webp" alt="Logo Footer" class="logo-footer">
             <ul>
               <li><a href="#">Idiomas</a></li>
             </ul>
@@ -108,31 +113,492 @@
 
     <script>
       
-// Banner con Slider
+// Slider Creativo e Interactivo
 document.addEventListener("DOMContentLoaded", () => {
-    let current = 0;
+    // Elementos del DOM
+    const sliderContainer = document.querySelector('.slider');
     const slides = document.querySelectorAll('.slide');
-    const next = document.querySelector('.next');
-    const prev = document.querySelector('.prev');
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.remove('activo');
-            if (i === index) slide.classList.add('activo');
+    const nextBtn = document.querySelector('.next');
+    const prevBtn = document.querySelector('.prev');
+    
+    // Estado del slider
+    const state = {
+        current: 0,
+        isAnimating: false,
+        autoplayTimer: null,
+        transitionTime: 800, // Tiempo de transición en ms
+        effectMode: 0, // Para alternar entre diferentes efectos
+        effectNames: ['zoom-fade', 'slide-horizontal', 'fade-through', 'cube', 'flip'],
+        touchStartX: 0,
+        touchStartY: 0
+    };
+    
+    // Crear elementos de UI adicionales
+    function setupSliderUI() {
+        // Crear contenedor para indicadores
+        const indicatorsWrapper = document.createElement('div');
+        indicatorsWrapper.className = 'slider-indicators';
+        
+        // Crear indicadores para cada slide
+        slides.forEach((_, index) => {
+            const indicator = document.createElement('span');
+            indicator.className = 'indicator';
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => {
+                if (!state.isAnimating && state.current !== index) {
+                    changeSlide(index);
+                }
+            });
+            indicatorsWrapper.appendChild(indicator);
+        });
+        
+        // Crear botones de efecto
+        const effectsWrapper = document.createElement('div');
+        effectsWrapper.className = 'slider-effects';
+        
+        const effectButton = document.createElement('button');
+        effectButton.className = 'effect-toggle';
+        effectButton.innerHTML = '<span>Efecto: </span>' + state.effectNames[state.effectMode];
+        effectButton.addEventListener('click', changeEffect);
+        
+        effectsWrapper.appendChild(effectButton);
+        
+        // Añadir progreso
+        const progressBar = document.createElement('div');
+        progressBar.className = 'slider-progress';
+        const progressFill = document.createElement('div');
+        progressFill.className = 'progress-fill';
+        progressBar.appendChild(progressFill);
+        
+        // Añadir elementos al slider
+        sliderContainer.appendChild(indicatorsWrapper);
+        sliderContainer.appendChild(effectsWrapper);
+        sliderContainer.appendChild(progressBar);
+        
+        // Añadir clase al slider para efecto inicial
+        sliderContainer.classList.add('effect-' + state.effectNames[state.effectMode]);
+        
+        // Añadir gestión de info para cada slide
+        slides.forEach((slide) => {
+            // Solo crear contenedor de info si no existe
+            if (!slide.querySelector('.slide-info')) {
+                const slideTitle = slide.getAttribute('data-title') || '';
+                const slideDesc = slide.getAttribute('data-description') || '';
+                
+                if (slideTitle || slideDesc) {
+                    const infoContainer = document.createElement('div');
+                    infoContainer.className = 'slide-info';
+                    
+                    if (slideTitle) {
+                        const titleElement = document.createElement('h3');
+                        titleElement.textContent = slideTitle;
+                        infoContainer.appendChild(titleElement);
+                    }
+                    
+                    if (slideDesc) {
+                        const descElement = document.createElement('p');
+                        descElement.textContent = slideDesc;
+                        infoContainer.appendChild(descElement);
+                    }
+                    
+                    slide.appendChild(infoContainer);
+                }
+            }
+        });
+        
+        // Preparar efectos para cada slide
+        setupSlideEffects();
+    }
+    
+    // Preparar efectos especiales para cada slide
+    function setupSlideEffects() {
+        slides.forEach((slide, index) => {
+            // Configuración para el efecto de cubo
+            if (index === 0) {
+                slide.classList.add('current');
+            } else if (index === 1) {
+                slide.classList.add('next');
+            } else if (index === slides.length - 1) {
+                slide.classList.add('prev');
+            }
+            
+            // Configuración para efecto de partículas (solo si es un slide con imagen)
+            const slideImg = slide.querySelector('img');
+            if (slideImg && Math.random() > 0.5) {
+                const particlesContainer = document.createElement('div');
+                particlesContainer.className = 'particles-effect';
+                
+                // Crear partículas
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particle.style.animationDuration = `${5 + Math.random() * 10}s`;
+                    particlesContainer.appendChild(particle);
+                }
+                
+                slide.appendChild(particlesContainer);
+            }
         });
     }
-
-    next.onclick = () => {
-        current = (current + 1) % slides.length;
-        showSlide(current);
-    };
-
-    prev.onclick = () => {
-        current = (current - 1 + slides.length) % slides.length;
-        showSlide(current);
-    };
-
-    showSlide(current); // Mostrar el primer slide al cargar
+    
+    // Cambiar de slide con animación
+    function changeSlide(index, direction = null) {
+        if (state.isAnimating) return;
+        
+        // Determinar dirección si no se especifica
+        if (direction === null) {
+            direction = index > state.current ? 'next' : 'prev';
+        }
+        
+        state.isAnimating = true;
+        
+        // Detener autoplay temporalmente
+        pauseAutoplay();
+        
+        // Actualizar indicadores
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach((ind, i) => {
+            ind.classList.toggle('active', i === index);
+        });
+        
+        // Obtener slides actual y siguiente
+        const currentSlide = slides[state.current];
+        const targetSlide = slides[index];
+        
+        // Limpiar clases de animación
+        slides.forEach(slide => {
+            slide.classList.remove('activo', 'entrando', 'saliendo', 'desde-izquierda', 'desde-derecha', 'current', 'next', 'prev');
+        });
+        
+        // Aplicar clases según el efecto seleccionado
+        switch (state.effectNames[state.effectMode]) {
+            case 'zoom-fade':
+                currentSlide.classList.add('saliendo');
+                targetSlide.classList.add('entrando', 'activo');
+                break;
+                
+            case 'slide-horizontal':
+                currentSlide.classList.add('activo', 'saliendo');
+                targetSlide.classList.add('activo', 'entrando');
+                
+                if (direction === 'next') {
+                    targetSlide.classList.add('desde-derecha');
+                } else {
+                    targetSlide.classList.add('desde-izquierda');
+                }
+                break;
+                
+            case 'fade-through':
+                currentSlide.classList.add('activo', 'desvaneciendo');
+                targetSlide.classList.add('apareciendo');
+                
+                setTimeout(() => {
+                    targetSlide.classList.add('activo');
+                    currentSlide.classList.remove('activo');
+                }, state.transitionTime / 2);
+                break;
+                
+            case 'cube':
+                currentSlide.classList.add('current');
+                
+                if (direction === 'next') {
+                    targetSlide.classList.add('next');
+                    sliderContainer.classList.add('rotate-cube-next');
+                } else {
+                    targetSlide.classList.add('prev');
+                    sliderContainer.classList.add('rotate-cube-prev');
+                }
+                
+                setTimeout(() => {
+                    currentSlide.classList.remove('current');
+                    targetSlide.classList.remove('next', 'prev');
+                    targetSlide.classList.add('current');
+                    sliderContainer.classList.remove('rotate-cube-next', 'rotate-cube-prev');
+                }, state.transitionTime);
+                break;
+                
+            case 'flip':
+                currentSlide.classList.add('activo', 'flipping-out');
+                targetSlide.classList.add('flipping-in');
+                
+                setTimeout(() => {
+                    targetSlide.classList.add('activo');
+                    currentSlide.classList.remove('activo');
+                }, state.transitionTime / 2);
+                break;
+        }
+        
+        // Animar la barra de progreso
+        animateProgressBar();
+        
+        // Reiniciar estado después de la transición
+        setTimeout(() => {
+            state.isAnimating = false;
+            state.current = index;
+            
+            // Limpiar todas las clases de animación
+            slides.forEach(slide => {
+                slide.classList.remove('saliendo', 'entrando', 'desde-izquierda', 'desde-derecha', 'desvaneciendo', 'apareciendo', 'flipping-in', 'flipping-out');
+            });
+            
+            // Actualizar visibilidad
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('activo');
+                } else {
+                    slide.classList.remove('activo');
+                }
+            });
+            
+            // Reiniciar autoplay si estaba activo
+            if (state.autoplayTimer) {
+                startAutoplay();
+            }
+            
+            // Posicionar slides para efectos especiales
+            updateSlidePositions();
+        }, state.transitionTime);
+    }
+    
+    // Actualizar posiciones de slides para efectos 3D
+    function updateSlidePositions() {
+        // Para efectos de cubo y 3D
+        slides.forEach((slide, i) => {
+            slide.classList.remove('current', 'next', 'prev');
+            
+            if (i === state.current) {
+                slide.classList.add('current');
+            } else if (i === (state.current + 1) % slides.length) {
+                slide.classList.add('next');
+            } else if (i === (state.current - 1 + slides.length) % slides.length) {
+                slide.classList.add('prev');
+            }
+        });
+    }
+    
+    // Cambiar el tipo de efecto de transición
+    function changeEffect() {
+        state.effectMode = (state.effectMode + 1) % state.effectNames.length;
+        
+        // Actualizar texto del botón
+        const effectButton = document.querySelector('.effect-toggle');
+        if (effectButton) {
+            effectButton.innerHTML = '<span>Efecto: </span>' + state.effectNames[state.effectMode];
+        }
+        
+        // Actualizar clase en el contenedor
+        sliderContainer.className = sliderContainer.className.replace(/effect-[a-z-]+/g, '');
+        sliderContainer.classList.add('slider', 'effect-' + state.effectNames[state.effectMode]);
+    }
+    
+    // Animación de la barra de progreso
+    function animateProgressBar() {
+        const progressFill = document.querySelector('.progress-fill');
+        if (!progressFill) return;
+        
+        progressFill.style.width = '0%';
+        
+        // Forzar un reflow
+        void progressFill.offsetWidth;
+        
+        progressFill.style.transition = `width ${state.transitionTime}ms linear`;
+        progressFill.style.width = '100%';
+    }
+    
+    // Iniciar autoplay
+    function startAutoplay() {
+        if (state.autoplayTimer) clearInterval(state.autoplayTimer);
+        
+        state.autoplayTimer = setInterval(() => {
+            if (!state.isAnimating) {
+                const nextIndex = (state.current + 1) % slides.length;
+                changeSlide(nextIndex, 'next');
+            }
+        }, 5000); // Cambiar cada 5 segundos
+    }
+    
+    // Pausar autoplay
+    function pauseAutoplay() {
+        if (state.autoplayTimer) {
+            clearInterval(state.autoplayTimer);
+        }
+    }
+    
+    // Configurar eventos de ratón/táctiles
+    function setupEvents() {
+        // Botones de navegación
+        nextBtn.addEventListener('click', () => {
+            const nextIndex = (state.current + 1) % slides.length;
+            changeSlide(nextIndex, 'next');
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            const prevIndex = (state.current - 1 + slides.length) % slides.length;
+            changeSlide(prevIndex, 'prev');
+        });
+        
+        // Eventos táctiles
+        sliderContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+        sliderContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
+        sliderContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+        
+        // Eventos de ratón para pausar/reanudar autoplay
+        sliderContainer.addEventListener('mouseenter', pauseAutoplay);
+        sliderContainer.addEventListener('mouseleave', () => {
+            if (document.visibilityState === 'visible') {
+                startAutoplay();
+            }
+        });
+        
+        // Detener cuando la página no es visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                if (state.autoplayTimer) startAutoplay();
+            } else {
+                pauseAutoplay();
+            }
+        });
+        
+        // Capturar eventos de teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                const nextIndex = (state.current + 1) % slides.length;
+                changeSlide(nextIndex, 'next');
+            } else if (e.key === 'ArrowLeft') {
+                const prevIndex = (state.current - 1 + slides.length) % slides.length;
+                changeSlide(prevIndex, 'prev');
+            }
+        });
+        
+        // Eventos especiales para efectos inmersivos
+        sliderContainer.addEventListener('mousemove', handleMouseMove);
+    }
+    
+    // Gestión de eventos táctiles
+    function handleTouchStart(e) {
+        state.touchStartX = e.touches[0].clientX;
+        state.touchStartY = e.touches[0].clientY;
+    }
+    
+    function handleTouchMove(e) {
+        if (!state.touchStartX || !state.touchStartY) return;
+        
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        
+        // Calculamos la distancia
+        const diffX = state.touchStartX - touchX;
+        const diffY = state.touchStartY - touchY;
+        
+        // Si el movimiento horizontal es mayor que el vertical
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            e.preventDefault(); // Prevenir scroll
+        }
+    }
+    
+    function handleTouchEnd(e) {
+        if (!state.touchStartX) return;
+        
+        const touchEndX = e.changedTouches[0].clientX;
+        const diffX = state.touchStartX - touchEndX;
+        
+        // Umbral para considerar un swipe (en píxeles)
+        const threshold = 80;
+        
+        if (diffX > threshold && !state.isAnimating) {
+            // Swipe hacia la izquierda -> siguiente slide
+            const nextIndex = (state.current + 1) % slides.length;
+            changeSlide(nextIndex, 'next');
+        } else if (diffX < -threshold && !state.isAnimating) {
+            // Swipe hacia la derecha -> slide anterior
+            const prevIndex = (state.current - 1 + slides.length) % slides.length;
+            changeSlide(prevIndex, 'prev');
+        }
+        
+        // Reiniciar valores
+        state.touchStartX = null;
+        state.touchStartY = null;
+    }
+    
+    // Efecto de paralaje y perspectiva según posición del ratón
+    function handleMouseMove(e) {
+        // Solo para ciertos efectos
+        if (state.effectNames[state.effectMode] !== 'cube' && 
+            state.effectNames[state.effectMode] !== 'flip') return;
+            
+        const { left, top, width, height } = sliderContainer.getBoundingClientRect();
+        
+        // Posición relativa del ratón (de -1 a 1)
+        const x = (e.clientX - left) / width * 2 - 1;  
+        const y = (e.clientY - top) / height * 2 - 1;
+        
+        // Ajustar perspectiva y rotación sutilmente
+        const currentSlide = slides[state.current];
+        if (currentSlide) {
+            currentSlide.style.transform = `perspective(1000px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg) scale3d(1.05, 1.05, 1.05)`;
+        }
+    }
+    
+    // Añadir efecto de confeti para celebrar transiciones (use ocasionalmente)
+    function celebrateWithConfetti() {
+        // Crear contenedor de confeti si no existe
+        let confettiContainer = document.querySelector('.confetti-container');
+        
+        if (!confettiContainer) {
+            confettiContainer = document.createElement('div');
+            confettiContainer.className = 'confetti-container';
+            sliderContainer.appendChild(confettiContainer);
+        }
+        
+        // Limpiar confeti existente
+        confettiContainer.innerHTML = '';
+        
+        // Crear piezas de confeti
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = `${Math.random() * 100}%`;
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 80%, 60%)`;
+            confetti.style.animationDelay = `${Math.random() * 3}s`;
+            confettiContainer.appendChild(confetti);
+        }
+        
+        // Eliminar después de la animación
+        setTimeout(() => {
+            confettiContainer.remove();
+        }, 3000);
+    }
+    
+    // Inicializar slider
+    function init() {
+        // Mostrar el primer slide
+        slides[0].classList.add('activo');
+        
+        // Configurar la interfaz y eventos
+        setupSliderUI();
+        setupEvents();
+        
+        // Iniciar autoplay
+        startAutoplay();
+        
+        // Celebrar ocasionalmente (1 de cada 5 veces)
+        if (Math.random() > 0.8) {
+            setTimeout(() => {
+                celebrateWithConfetti();
+            }, 1000);
+        }
+        
+        // Agregar clase para animación inicial
+        setTimeout(() => {
+            sliderContainer.classList.add('initialized');
+        }, 100);
+    }
+    
+    // Iniciar todo
+    init();
 });
         // Offcanvas menu
         const offcanvas = document.getElementById("offcanvas-menu");
@@ -288,8 +754,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Iniciar efecto de typing después de un breve retraso
         setTimeout(typeWriter, 800);
     }
-});
-    </script>
+});  
+</script>
 
 </body>
 </html>

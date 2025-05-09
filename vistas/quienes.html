@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="../css/styles.css">
+  <link rel="icon" href="./img/clock-regular.svg">
 </head>
 <body>
   <!-- Menú off-canvas -->
@@ -25,20 +26,20 @@
 <!-- Header -->
 <header>
     <div class="menu-superior">
-        <button id="menu-button">☰</button>
+        <button id="menu-button" class="menu-button">☰</button>
         <nav class="nav-header">
             <ul>
                 <li><a href="../index.html">Inicio</a></li>
-                <li><a href="vistas/quienes.html">Quienes somos</a></li>
-                <li><a href="vistas/historia.html">Historia</a></li>
-                <li><a href="vistas/gamas.html">Gamas</a></li>
-                <li><a href="vistas/productos.html">Nuestros productos</a></li>
-                <li><a href="vistas/casas.html">Otras casas relojeras</a></li>
+                <li><a href="quienes.html">Quienes somos</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="gamas.html">Gamas</a></li>
+                <li><a href="productos.html">Nuestros productos</a></li>
+                <li><a href="casas.html">Otras casas relojeras</a></li>
             </ul>
         </nav>
     </div>
     <div class="logo-container">
-        <img src="../img/20250508_2209_Logo Watch Club MX_simple_compose_01jtrr6809fh9bpbr3h6j5svbx.png" alt="Logo Watch Club MX" class="logo">
+        <img src="../img/logo.webp" alt="Logo Watch Club MX" class="logo">
         <h1 class="slogan">No midas minutos, marca legado</h1>
     </div>
 </header>
@@ -72,21 +73,34 @@
 
   <!-- Columna Derecha -->
   <section class="columna-derecha">
-    <button id="toggleGaleria">Mostrar relojes</button>
-    <div id="galeria-relojes" class="galeria oculto">
-      <div class="reloj-item">
-        <img src="../img/reloj1.png" alt="Reloj elegante">
-        <p>Modelo Clásico</p>
-      </div>
-      <div class="reloj-item">
-        <img src="../img/reloj2.png" alt="Reloj moderno">
-        <p>Edición Vanguardista</p>
-      </div>
-      <div class="reloj-item">
-        <img src="../img/reloj3.png" alt="Reloj deportivo">
-        <p>Sport Chronograph</p>
-      </div>
-    </div>
+    <!-- El HTML sigue igual que antes -->
+<button id="toggleGaleria" onclick="toggleGaleria()">Mostrar relojes</button>
+<div id="galeria-relojes" class="galeria oculto">
+  <div class="reloj-item">
+    <img src="../img/reloj1.png" alt="Reloj elegante">
+    <p>Modelo Clásico</p>
+  </div>
+  <div class="reloj-item">
+    <img src="../img/reloj2.png" alt="Reloj moderno">
+    <p>Edición Vanguardista</p>
+  </div>
+  <div class="reloj-item">
+    <img src="../img/reloj5.png" alt="Reloj moderno">
+    <p>5205R - Complicaciones</p>
+  </div>
+  <div class="reloj-item">
+    <img src="../img/reloj3.png" alt="Reloj deportivo">
+    <p>Sport Chronograph</p>
+  </div>
+  <div class="reloj-item">
+    <img src="../img/reloj6.png" alt="Reloj deportivo">
+    <p>Extreme Performance</p>
+  </div>
+  <div class="reloj-item">
+    <img src="../img/reloj7.png" alt="Reloj deportivo">
+    <p>Patek Philippe</p>
+  </div>
+</div>
   </section>
 </main>
 
@@ -94,7 +108,7 @@
   <div class="footer-contenido">
     <div class="footer-col">
       <h4>Compartir</h4>
-      <img src="../img/20250508_2209_Logo Watch Club MX_simple_compose_01jtrr6809fh9bpbr3h6j5svbx.png" alt="Logo Footer" class="logo-footer">
+      <img src="../img/logo.webp" alt="Logo Footer" class="logo-footer">
       <ul>
         <li><a href="#">Idiomas</a></li>
       </ul>
@@ -131,19 +145,17 @@
 
 </body>
 <script>
-  // Mostrar/Ocultar galería
-document.addEventListener('DOMContentLoaded', function() {
-  const btn = document.getElementById('toggleGaleria');
+function toggleGaleria() {
   const galeria = document.getElementById('galeria-relojes');
+  const btn = document.getElementById('toggleGaleria');
 
-  btn.addEventListener('click', function() {
-    galeria.classList.toggle('oculto');
-    btn.textContent = galeria.classList.contains('oculto') ? 'Mostrar relojes' : 'Ocultar relojes';
-  });
-});
-
-        // Offcanvas menu
-        const offcanvas = document.getElementById("offcanvas-menu");
+  galeria.classList.toggle('oculto');
+  btn.textContent = galeria.classList.contains('oculto')
+    ? 'Mostrar relojes'
+    : 'Ocultar relojes';
+}
+// Offcanvas menu
+const offcanvas = document.getElementById("offcanvas-menu");
         const menuBtn = document.getElementById("menu-button");
         const closeBtn = document.getElementById("close-menu");
 
@@ -182,5 +194,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // Crear el fondo oscuro para el offcanvas
+    var backdrop = document.createElement('div');
+    backdrop.className = 'offcanvas-backdrop';
+    document.body.appendChild(backdrop);
+    
+    // Obtener elementos
+    var menuButton = document.getElementById('menu-button');
+    var offcanvas = document.querySelector('.offcanvas');
+    var closeButton = offcanvas.querySelector('button');
+    
+    // Añadir título al offcanvas
+    var title = document.createElement('h2');
+    title.className = 'offcanvas-title';
+    title.textContent = 'Menú de Navegación';
+    offcanvas.insertBefore(title, offcanvas.firstChild);
+    
+    // Función para abrir el offcanvas
+    function openOffcanvas() {
+        offcanvas.classList.add('abierto');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll en el body
+    }
+    
+    // Función para cerrar el offcanvas
+    function closeOffcanvas() {
+        offcanvas.classList.remove('abierto');
+        document.body.style.overflow = ''; // Restaurar scroll
+    }
+    
+    // Event listeners
+    menuButton.addEventListener('click', openOffcanvas);
+    closeButton.addEventListener('click', closeOffcanvas);
+    backdrop.addEventListener('click', closeOffcanvas);
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && offcanvas.classList.contains('abierto')) {
+            closeOffcanvas();
+        }
+    });
+    
+    // Efecto hover avanzado para los elementos del menú
+    var menuItems = offcanvas.querySelectorAll('nav ul li a');
+    menuItems.forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s ease';
+        });
+    });
+});
+        
 </script>
 </html>

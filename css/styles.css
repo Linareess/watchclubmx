@@ -55,20 +55,28 @@ header {
 
 /* También intentemos con la clase en caso de que esté usando ambos */
 .menu-button {
-    position: fixed !important;
-    top: 1em !important;
-    left: 1em !important;
-    right: auto !important;
-    cursor: pointer;
-    z-index: 999;
-    background: none;
+    /* position: fixed;  ❌ Esto hacía que se mantuviera fijo */
+    position: static;     /* ✅ Ahora sigue el flujo del documento */
+    background-color: #daa520;
     border: none;
+    color: #fff;
     font-size: 1.5em;
-    margin: 0 !important;
-    padding: 0.3em !important;
-    display: block !important;
-    transform: none !important;
+    font-weight: bold;
+    padding: 0.6em 1em;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1em; /* Opcional: para dar espacio alrededor si lo necesitas */
 }
+
+
+.menu-button:hover {
+    background-color: #b8860b;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
 
 .menu-superior {
     position: absolute;
@@ -105,9 +113,19 @@ header {
 /* Imagen de fondo */
 .hero-fondo {
     height: 400px;
-    background-image: url("../img/fondo-reloj.png");
-    background-size: cover;
-    background-position: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #video-contenedor {
+    width: 100%;
+    height: 400px;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* Contenido principal mejorado */
@@ -258,58 +276,391 @@ header {
     }
 }
 
-/* Slider */
+/* Slider Creativo y Artístico */
 .slider {
     flex: 1;
-    max-width: 600px;
+    max-width: 800px;
     position: relative;
-    border-radius: 12px;
+    margin: 2rem auto;
+    height: 450px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 16px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    background: #111;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.slider img {
+.slider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #fc5c7d, #6a82fb, #05dfd7);
+    z-index: 100;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+    box-shadow: 0 0 15px rgba(252, 92, 125, 0.6);
+}
+
+.slider.initialized::before {
+    transform: scaleX(1);
+    transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Estilos para los slides */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     display: none;
-    transition: opacity 1s ease-in-out;
-    border-radius: 12px;
+    overflow: hidden;
+    background-color: #000;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
-.slider img.activo {
+.slide.activo {
     display: block;
-    opacity: 1;
+    z-index: 1;
 }
 
-.slider button.prev,
-.slider button.next {
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide.activo:hover img {
+    transform: scale(1.05);
+}
+
+/* Botones de navegación */
+.prev, .next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: var(--blanco);
-    border: none;
-    padding: 0.7em 1em;
-    cursor: pointer;
-    font-size: 1.5em;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     z-index: 10;
-    transition: background 0.3s ease;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.slider button.prev:hover,
-.slider button.next:hover {
-    background: rgba(0, 0, 0, 0.7);
+.prev {
+    left: 20px;
+    transform: translateY(-50%) translateX(-10px);
 }
 
-.slider .prev {
-    left: 10px;
+.next {
+    right: 20px;
+    transform: translateY(-50%) translateX(10px);
 }
 
-.slider .next {
-    right: 10px;
+.slider:hover .prev,
+.slider:hover .next {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
 }
 
+.prev:hover, .next:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev:active, .next:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Indicadores de posición */
+.slider-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    transform: scale(0.8);
+}
+
+.indicator.active {
+    background: #fff;
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+.indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.indicator:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Barra de progreso */
+.slider-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #fc5c7d, #6a82fb);
+    transition: width 0.3s linear;
+}
+
+/* Información del slide */
+.slide-info {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+    pointer-events: none;
+}
+
+.slide.activo .slide-info {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.3s;
+}
+
+.slide-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.slide-info p {
+    font-size: 1.1rem;
+    max-width: 80%;
+    margin: 0 auto;
+    line-height: 1.4;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Botón de cambio de efecto */
+.slider-effects {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.effect-toggle {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.effect-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    opacity: 1;
+}
+
+.effect-toggle span {
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Gradiente para mejorar legibilidad */
+.slide::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    pointer-events: none;
+}
+
+/* Efectos de transición */
+
+/* 1. Zoom y Fade */
+.effect-zoom-fade .slide.entrando {
+    animation: zoomIn 0.8s forwards;
+}
+
+.effect-zoom-fade .slide.saliendo {
+    animation: zoomOut 0.8s forwards;
+}
+
+/* 2. Slide Horizontal */
+.effect-slide-horizontal .slide.entrando.desde-derecha {
+    animation: slideFromRight 0.8s forwards;
+}
+
+.effect-slide-horizontal .slide.entrando.desde-izquierda {
+    animation: slideFromLeft 0.8s forwards;
+}
+
+.effect-slide-horizontal .slide.saliendo {
+    animation: fadeOut 0.8s forwards;
+}
+
+/* 3. Fade Through */
+.effect-fade-through .slide.apareciendo {
+    opacity: 0;
+    animation: fadeIn 0.8s forwards;
+    animation-delay: 0.4s;
+}
+
+.effect-fade-through .slide.desvaneciendo {
+    animation: fadeOut 0.8s forwards;
+}
+
+/* 4. Efecto Cubo 3D */
+.effect-cube {
+    transform-style: preserve-3d;
+}
+
+.effect-cube .slide {
+    backface-visibility: hidden;
+    transition: transform 0s;
+}
+
+.effect-cube .slide.current {
+    transform: translateZ(0) rotateY(0deg);
+    z-index: 1;
+}
+
+.effect-cube .slide.next {
+    transform: translateZ(-150px) rotateY(90deg);
+    transform-origin: left center;
+    z-index: 0;
+}
+
+.effect-cube .slide.prev {
+    transform: translateZ(-150px) rotateY(-90deg);
+    transform-origin: right center;
+    z-index: 0;
+}
+
+.effect-cube.rotate-cube-next {
+    animation: rotateCubeToNext 0.8s forwards;
+}
+
+.effect-cube.rotate-cube-prev {
+    animation: rotateCubeToPrev 0.8s forwards;
+}
+
+/* 5. Efecto Flip */
+.effect-flip .slide.flipping-in {
+    animation: flipIn 0.8s forwards;
+    animation-delay: 0.4s;
+    backface-visibility: hidden;
+}
+
+.effect-flip .slide.flipping-out {
+    animation: flipOut 0.8s forwards;
+    backface-visibility: hidden;
+}
+
+/* Partículas decorativas */
+.particles-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: floatParticle 10s ease-in-out infinite;
+}
+
+/* Confeti para efectos especiales */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 16px;
+    background: #f00;
+    top: -10px;
+    opacity: 0;
+}
 .frase-final {
     text-align: center;
     padding: 2em;
@@ -539,38 +890,90 @@ footer {
     box-shadow: 2px 2px 12px rgba(0,0,0,0.05);
   }
   
-  button#toggleGaleria {
-    padding: 0.5em 1em;
-    background-color: #bfa76f;
+  /* Contenedor centrado */
+#toggleGaleria {
+    display: block;
+    margin: 2em auto;
+    padding: 0.75em 2em;
+    background: linear-gradient(135deg, #bfa76f, #9c7c3f);
     border: none;
+    border-radius: 8px;
     color: white;
-    cursor: pointer;
     font-weight: bold;
-    margin-bottom: 1em;
+    font-size: 1.1em;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
+  /* Efecto de profundidad al pasar el mouse */
+  #toggleGaleria:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Línea inferior degradada animada */
+  #toggleGaleria::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #ffdf8e, #bfa76f, #ffdf8e);
+    animation: shine 2.5s infinite linear;
+  }
+  
+  /* Animación suave del degradado */
+  @keyframes shine {
+    0% { background-position: 0% }
+    100% { background-position: 200% }
+  }
+  
+  #toggleGaleria::after {
+    background-size: 200% auto;
+    border-radius: 0 0 8px 8px;
+  }  
+  
+  /* Contenedor de la galería con flexbox */
   .galeria {
     display: flex;
-    flex-direction: column;
-    gap: 1em;
+    flex-wrap: wrap;  /* Permite que los items se envuelvan en varias filas */
+    gap: 1em;         /* Espacio entre los elementos */
+    justify-content: space-between;  /* Espacio entre las columnas */
   }
   
+  /* Estilo para cada reloj */
   .reloj-item {
-    display: flex;
-    align-items: center;
-    gap: 1em;
+    width: calc(50% - 0.5em);  /* Cada item ocupa el 50% del contenedor, con espacio de gap entre columnas */
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1em; /* Espacio entre las filas */
+    box-sizing: border-box;  /* Asegura que el padding no afecte el ancho */
   }
   
+  /* Estilo para las imágenes dentro de cada reloj */
   .reloj-item img {
-    width: 100px;
+    width: 100%;          /* La imagen ocupará todo el ancho disponible dentro de su contenedor */
+    height: auto;         /* Mantiene la proporción de la imagen */
+    max-height: 120px;    /* Reducimos la altura máxima de la imagen */
+    object-fit: contain;  /* Asegura que la imagen se ajuste dentro del contenedor sin recortarse, manteniendo su proporción */
     border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.2);
   }
   
+  /* Estilo para los textos debajo de las imágenes */
+  .reloj-item p {
+    margin-top: 10px;
+    font-weight: bold;
+  }
   .oculto {
-    display: none;
+    display: none !important;
   }
-  
 /* Animación de fade-in */
 @keyframes fadeIn {
     from {
@@ -632,4 +1035,421 @@ footer {
     padding-top: 1rem;
     font-size: 0.9rem;
   }
+
+/* Estilos para la página de historia - Watch Club MX */
+
+/* Variables de color */
+
+/* Variables globales para consistencia */
+
+/* Variables globales para consistencia */
+:root {
+    --primary-color: #daa520;           /* Goldenrod */
+    --primary-color-dark: #b8860b;      /* DarkGoldenrod */
+    --primary-color-light: #ffdb58;     /* Mustard (más clara que goldenrod) */
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --overlay-color: rgba(0, 0, 0, 0.65);
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 2rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --border-radius: 5px;
+    --transition-speed: 0.3s;
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    --timeline-width: 3px;
+  }
   
+  /* Reseteo y estilos base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+  }
+  
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--text-dark); /* Respaldo si no carga el video */
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--overlay-color);
+    color: var(--text-light);
+    text-align: center;
+    padding: var(--spacing-md);
+    z-index: 1;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    opacity: 0;
+    margin-top: 0%;
+    transform: translateY(30px);
+    animation: fadeInUp 1s ease forwards 0.5s;
+  }
+  
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 4rem); /* Tamaño responsivo */
+    font-weight: 800;
+    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px var(--negro-suave), 0 4px 15px var(--oro-claro); /* Sombra con profundidad */
+    color: var(--oro); /* Color dorado */
+    padding: 10px 20px; /* Espaciado alrededor del texto */
+    border-radius: 8px; /* Bordes redondeados para un toque suave */
+    box-shadow: 0 4px 15px var(--oro-oscuro); /* Sombra sutil alrededor del texto */
+    transition: all 0.3s ease-in-out; /* Transición suave en interacciones */
+    margin-top: 0%;
+  }
+  
+  .hero-title:hover {
+    color: var(--oro-claro); /* Cambio de color al pasar el ratón */
+    text-shadow: 0 2px 10px var(--negro-suave), 0 4px 20px var(--oro); /* Efecto de sombra más intenso al pasar el ratón */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 300;
+    margin-bottom: var(--spacing-md);
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 1px 8px rgb(198, 220, 0);
+  }
+  
+  .cta-button {
+    background-color: var(--primary-color);
+    padding: 0.9em 2em;
+    border: none;
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all var(--transition-speed);
+    box-shadow: var(--box-shadow);
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  
+  .cta-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: width 0.5s ease;
+    z-index: -1;
+  }
+  
+  .cta-button:hover {
+    background-color: var(--primary-color-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px #daa520;
+  }
+  
+  .cta-button:hover:before {
+    width: 100%;
+  }
+  
+  .cta-button:active {
+    transform: translateY(-1px);
+  }
+  
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-light);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.5s;
+  }
+  
+  .scroll-arrow {
+    margin-top: var(--spacing-xs);
+    animation: bounce 2s infinite;
+    font-size: 1.5rem;
+  }
+  
+  /* ===== TIMELINE SECTION ===== */
+  .timeline-section {
+    padding: var(--spacing-lg) var(--spacing-md);
+    background-color: #fff;
+    color: var(--text-dark);
+    position: relative;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+  }
+  
+  .section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color);
+  }
+  
+  .timeline-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .timeline {
+    position: relative;
+    margin-left: 20px;
+    border-left: var(--timeline-width) solid var(--primary-color);
+    padding: var(--spacing-sm) 0;
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding-left: calc(var(--spacing-lg) - 20px);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+  
+  .timeline-item.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -11px; /* Centrar con el borde */
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 3px var(--primary-color-light);
+    transition: all var(--transition-speed);
+  }
+  
+  .timeline-item:hover::before {
+    background-color: var(--primary-color-dark);
+    transform: scale(1.2);
+  }
+  
+  .timeline-year {
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.4rem;
+    display: inline-block;
+    position: relative;
+    transition: all var(--transition-speed);
+  }
+  
+  .timeline-item:hover .timeline-year {
+    transform: translateX(5px);
+    color: var(--primary-color-dark);
+  }
+  
+  .timeline-content {
+    background-color: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all var(--transition-speed);
+  }
+  
+  .timeline-item:hover .timeline-content {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+  
+  .timeline-content h3 {
+    margin: 0 0 var(--spacing-xs);
+    font-size: 1.3rem;
+    color: var(--text-dark);
+  }
+  
+  .timeline-content p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.7;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+  
+  /* Media Queries */
+  @media (min-width: 768px) {
+    .timeline {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: none;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 100%;
+      width: var(--timeline-width);
+      background-color: var(--primary-color);
+    }
+    
+    .timeline-item {
+      width: 50%;
+      margin-bottom: var(--spacing-lg);
+      padding-left: 0;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      padding-right: calc(var(--spacing-lg) + var(--spacing-sm));
+    }
+    
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+    }
+    
+    .timeline-item:nth-child(odd)::before {
+      right: -10px;
+      left: auto;
+    }
+    
+    .timeline-item:nth-child(even)::before {
+      left: -10px;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-content {
+      text-align: right;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-content {
+      text-align: left;
+    }
+  }
+  
+  /* Efecto de parallax para sección de timeline */
+  .parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.03;
+  }
+  
+  /* Estilos adicionales para soportar Dark Mode */
+  @media (prefers-color-scheme: dark) {
+    .timeline-section {
+      background-color: #222;
+      color: #f5f5f5;
+    }
+    
+    .timeline-content {
+      background-color: #333;
+      color: #f5f5f5;
+    }
+    
+    .timeline-content h3 {
+      color: #f5f5f5;
+    }
+    
+    .timeline-content p {
+      color: #ccc;
+    }
+    
+    .timeline-item::before {
+      border-color: #222;
+    }
+    
+    .parallax-bg {
+      opacity: 0.05;
+    }
+  }
+ 
