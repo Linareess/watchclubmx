@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otras Casas Relojeras - Competencia Relojera de Lujo</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cas.css">
+</head>
+<body>
+   <!-- Menú off-canvas -->
+   <div id="offcanvas-menu" class="offcanvas">
+    <button id="close-menu">&times;</button>
+    <nav>
+        <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="quienes.html">Quienes somos</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="gamas.html">Gamas</a></li>
+            <li><a href="productos.html">Nuestros productos</a></li>
+            <li><a href="casas.html">Otras casas relojeras</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="menu-superior">
+        <button id="menu-button" class="menu-button">☰</button>
+        <nav class="nav-header">
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="quienes.html">Quienes somos</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="gamas.html">Gamas</a></li>
+                <li><a href="productos.html">Nuestros productos</a></li>
+                <li><a href="casas.html">Otras casas relojeras</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="logo-container">
+        <img src="../img/logo.webp" alt="Logo Watch Club MX" class="logo">
+        <h1 class="slogan">No midas minutos, marca legado</h1>
+    </div>
+</header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="introduction">
+            <h1>Casas Relojeras de Lujo</h1>
+            <p>Descubre cómo nuestras rivales en el mundo de la relojería de lujo mantienen su prestigio y compiten por ser las mejores. Aquí te mostramos las características y modelos que las han convertido en líderes del mercado.</p>
+        </section>
+
+        <section class="competing-brands">
+            <div class="brand">
+                <h2>Rolex</h2>
+               
+                <p>Una de las marcas más emblemáticas, conocida por su durabilidad y precisión. Rolex ha marcado la historia con modelos icónicos como el Submariner y el Day-Date.</p>
+            </div>
+            <div class="brand">
+                <h2>Patek Philippe</h2>
+                
+                <p>Conocida por sus complicaciones técnicas y su legado histórico, Patek Philippe sigue siendo un símbolo de lujo en el mundo de la alta relojería.</p>
+            </div>
+            <div class="brand">
+                <h2>Audemars Piguet</h2>
+                
+                <p>Audemars Piguet revolucionó la industria con su modelo Royal Oak. Hoy en día sigue siendo sinónimo de innovación y exclusividad.</p>
+            </div>
+            <div class="brand">
+                <h2>Vacheron Constantin</h2>
+                
+                <p>Una de las más antiguas y prestigiosas marcas de relojes. Vacheron Constantin sigue liderando el mercado con sus complicaciones únicas y diseños sofisticados.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-principal">
+        <div class="footer-contenido">
+          <div class="footer-col">
+            <h4>Compartir</h4>
+            <img src="../img/logo.webp" alt="Logo Footer" class="logo-footer">
+            <ul>
+              <li><a href="#">Idiomas</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Redes</h4>
+            <ul>
+              <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+              <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+              <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+              <li><a href="#"><i class="fas fa-book"></i> Colecciones</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Comunidad</h4>
+            <ul>
+              <li><a href="#">Acerca de</a></li>
+              <li><a href="#">Mantenimiento y cuidado</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Servicios</h4>
+            <ul>
+              <li><a href="#">Aviso legal</a></li>
+              <li><a href="#">Accesibilidad</a></li>
+              <li><a href="#">Soporte</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-derechos">
+          <p>© 2025 Watch Club MX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+// Offcanvas menu
+const offcanvas = document.getElementById("offcanvas-menu");
+        const menuBtn = document.getElementById("menu-button");
+        const closeBtn = document.getElementById("close-menu");
+
+        menuBtn.onclick = () => offcanvas.classList.add("abierto");
+        closeBtn.onclick = () => offcanvas.classList.remove("abierto");
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el botón de menú
+    var menuButton = document.getElementById('menu-button');
+    // Sacarlo de su contenedor actual y moverlo al principio del header
+    if (menuButton) {
+        var header = document.querySelector('header');
+        if (header) {
+            // Crear un nuevo contenedor para el botón
+            var buttonContainer = document.createElement('div');
+            buttonContainer.style.position = 'absolute';
+            buttonContainer.style.top = '1em';
+            buttonContainer.style.left = '1em';
+            buttonContainer.style.zIndex = '999';
+            
+            // Clonar el botón y añadirlo al nuevo contenedor
+            var newButton = menuButton.cloneNode(true);
+            buttonContainer.appendChild(newButton);
+            
+            // Añadir el nuevo contenedor al principio del header
+            header.insertBefore(buttonContainer, header.firstChild);
+            
+            // Ocultar el botón original
+            menuButton.style.display = 'none';
+            
+            // Transferir los event listeners
+            newButton.onclick = function() {
+                // Asumiendo que el botón original está configurado para mostrar/ocultar el offcanvas
+                menuButton.click();
+            };
+        }
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Crear el fondo oscuro para el offcanvas
+    var backdrop = document.createElement('div');
+    backdrop.className = 'offcanvas-backdrop';
+    document.body.appendChild(backdrop);
+    
+    // Obtener elementos
+    var menuButton = document.getElementById('menu-button');
+    var offcanvas = document.querySelector('.offcanvas');
+    var closeButton = offcanvas.querySelector('button');
+    
+    // Añadir título al offcanvas
+    var title = document.createElement('h2');
+    title.className = 'offcanvas-title';
+    title.textContent = 'Menú de Navegación';
+    offcanvas.insertBefore(title, offcanvas.firstChild);
+    
+    // Función para abrir el offcanvas
+    function openOffcanvas() {
+        offcanvas.classList.add('abierto');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll en el body
+    }
+    
+    // Función para cerrar el offcanvas
+    function closeOffcanvas() {
+        offcanvas.classList.remove('abierto');
+        document.body.style.overflow = ''; // Restaurar scroll
+    }
+    
+    // Event listeners
+    menuButton.addEventListener('click', openOffcanvas);
+    closeButton.addEventListener('click', closeOffcanvas);
+    backdrop.addEventListener('click', closeOffcanvas);
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && offcanvas.classList.contains('abierto')) {
+            closeOffcanvas();
+        }
+    });
+    
+    // Efecto hover avanzado para los elementos del menú
+    var menuItems = offcanvas.querySelectorAll('nav ul li a');
+    menuItems.forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s ease';
+        });
+    });
+});
+// Animación de marcas con contador de años
+const brands = [
+    { id: 'rolex', years: 0 },
+    { id: 'patek', years: 0 },
+    { id: 'audemars', years: 0 },
+    { id: 'vacheron', years: 0 },
+    { id: 'omega', years: 0 }
+];
+
+brands.forEach(brand => {
+    const counter = document.getElementById(`${brand.id}-counter`);
+    let interval = setInterval(() => {
+        if (brand.years < 150) {
+            brand.years++;
+            counter.textContent = brand.years;
+        } else {
+            clearInterval(interval);
+        }
+    }, 100);
+});
+
+// Botón de alerta divertido
+const brandBtns = document.querySelectorAll('.brand-btn');
+brandBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        alert("¡Exclusivo, solo para los más elegantes!");
+    });
+});
+
+// Efecto hover sobre las imágenes de las marcas
+const brandImages = document.querySelectorAll('.brand img');
+brandImages.forEach(img => {
+    img.addEventListener('mouseover', () => {
+        img.style.transform = 'scale(1.05)';
+        img.style.transition = 'transform 0.3s ease';
+    });
+
+    img.addEventListener('mouseout', () => {
+        img.style.transform = 'scale(1)';
+    });
+});
+
+// Añadir animación de aparición en el scroll
+const brandsSection = document.querySelector('.competing-brands');
+
+const revealOnScroll = () => {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const sectionPosition = brandsSection.offsetTop + brandsSection.offsetHeight;
+
+    if (scrollPosition >= sectionPosition) {
+        brandsSection.classList.add('visible');
+    }
+};
+
+// Hacer visible las marcas cuando se hace scroll
+window.addEventListener('scroll', revealOnScroll);
+
+    </script>
+</body>
+</html>

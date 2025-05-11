@@ -1,0 +1,105 @@
+/* Reset CSS básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+/* Main Content */
+main {
+    padding: 40px;
+    background-color: #fff;
+}
+
+.introduction {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.introduction h1 {
+    font-size: 2.5rem;
+    color: #DAA520;
+    margin-bottom: 20px;
+}
+
+.introduction p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Competencia - Marcas */
+.competing-brands {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.brand {
+    background-color: #fff;
+    border: 2px solid #DAA520;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.brand img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.brand:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Contador de años */
+.years-counter {
+    font-size: 30px;
+    font-weight: bold;
+    color: #DAA520;
+    margin: 10px 0;
+}
+
+/* Botón de marca */
+.brand-btn {
+    padding: 10px 20px;
+    background-color: #DAA520;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.brand-btn:hover {
+    background-color: #C59D20;
+    transform: translateY(-3px);
+}
+
+.brand-btn:active {
+    transform: translateY(1px);
+}
+
+/* Transición y hover sobre botones */
+.brand-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Social media buttons - para otros casos */
+.social-btn:hover {
+    transform: rotate(15deg);
+    transition: transform 0.3s ease-in-out;
+}

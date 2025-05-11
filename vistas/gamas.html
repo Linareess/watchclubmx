@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMAS| Watch Club MX</title>
+    <link rel="icon" href="../img/clock-regular.svg">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/historia.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Menú off-canvas -->
+    <div id="offcanvas-menu" class="offcanvas">
+        <button id="close-menu">&times;</button>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="quienes.html">Quienes somos</a></li>
+                <li><a href="historia.html">Historia</a></li>
+                <li><a href="gamas.html">Gamas</a></li>
+                <li><a href="productos.html">Nuestros productos</a></li>
+                <li><a href="casas.html">Otras casas relojeras</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="menu-superior">
+            <button id="menu-button" class="menu-button">☰</button>
+            <nav class="nav-header">
+                <ul>
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="quienes.html">Quienes somos</a></li>
+                    <li><a href="historia.html">Historia</a></li>
+                    <li><a href="gamas.html">Gamas</a></li>
+                    <li><a href="productos.html">Nuestros productos</a></li>
+                    <li><a href="casas.html">Otras casas relojeras</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="logo-container">
+            <img src="../img/logo.webp" alt="Logo Watch Club MX" class="logo">
+            <h1 class="slogan">No midas minutos, marca legado</h1>
+        </div>
+    </header>
+    <main class="gamas-container">
+        <section class="intro">
+            <h2 class="titulo-gama">Gamas de Relojes</h2>
+            <p class="descripcion-gama">
+                En Watch Club MX creemos que cada reloj representa una historia, una personalidad y una aspiración. Por ello, hemos clasificado nuestras colecciones en tres gamas principales: <strong>Esencial</strong>, <strong>Premium</strong> y <strong>Alta Relojería</strong>. Cada una diseñada para acompañarte en distintos momentos de la vida, sin perder el lujo y el carácter.
+            </p>
+        </section>
+    
+        <section class="gama" id="gama-esencial">
+            <div class="texto">
+                <h3>Gama Esencial</h3>
+                <p>
+                    Para quienes inician su camino en el mundo de la relojería de lujo. Estos relojes destacan por su precisión, materiales nobles y diseño atemporal, todo con un precio accesible que no compromete la calidad.
+                </p>
+            </div>
+            <div class="imagen-gama">
+                <img src="../img/gama1.png" alt="Gama Esencial" class="imagen-esencial"/>
+            </div>
+        </section>
+    
+        <section class="gama" id="gama-premium">
+            <div class="texto">
+                <h3>Gama Premium</h3>
+                <p>
+                    La elección de quienes buscan un equilibrio entre sofisticación y desempeño. Incorporan complicaciones como cronógrafos, calibres automáticos suizos y acabados artesanales. Un símbolo de gusto refinado.
+                </p>
+            </div>
+            <div class="imagen-gama">
+                <img src="../img/gama2.png" alt="Gama Premium" class="imagen-premium"/>
+            </div>
+        </section>
+    
+        <section class="gama" id="gama-alta">
+            <div class="texto">
+                <h3>Alta Relojería</h3>
+                <p>
+                    La cúspide del arte relojero. Piezas únicas con tourbillons, movimientos esqueleto, materiales exóticos y un legado de precisión. Aquí, la ingeniería se fusiona con el arte para crear obras maestras atemporales.
+                </p>
+            </div>
+            <div class="imagen-gama">
+                <img src="../img/gama3.png" alt="Alta Relojería" class="imagen-alta"/>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-principal">
+        <div class="footer-contenido">
+          <div class="footer-col">
+            <h4>Compartir</h4>
+            <img src="../img/logo.webp" alt="Logo Footer" class="logo-footer">
+            <ul>
+              <li><a href="#">Idiomas</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Redes</h4>
+            <ul>
+              <li><a href="#">Instagram</a></li>
+              <li><a href="#">Facebook</a></li>
+              <li><a href="#">YouTube</a></li>
+              <li><a href="#">Colecciones</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Comunidad</h4>
+            <ul>
+              <li><a href="#">Acerca de</a></li>
+              <li><a href="#">Mantenimiento y cuidado</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Servicios</h4>
+            <ul>
+              <li><a href="#">Aviso legal</a></li>
+              <li><a href="#">Accesibilidad</a></li>
+              <li><a href="#">Soporte</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-derechos">
+          <p>© 2025 Watch Club MX. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Offcanvas menu
+const offcanvas = document.getElementById("offcanvas-menu");
+        const menuBtn = document.getElementById("menu-button");
+        const closeBtn = document.getElementById("close-menu");
+
+        menuBtn.onclick = () => offcanvas.classList.add("abierto");
+        closeBtn.onclick = () => offcanvas.classList.remove("abierto");
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Obtener el botón de menú
+    var menuButton = document.getElementById('menu-button');
+    // Sacarlo de su contenedor actual y moverlo al principio del header
+    if (menuButton) {
+        var header = document.querySelector('header');
+        if (header) {
+            // Crear un nuevo contenedor para el botón
+            var buttonContainer = document.createElement('div');
+            buttonContainer.style.position = 'absolute';
+            buttonContainer.style.top = '1em';
+            buttonContainer.style.left = '1em';
+            buttonContainer.style.zIndex = '999';
+            
+            // Clonar el botón y añadirlo al nuevo contenedor
+            var newButton = menuButton.cloneNode(true);
+            buttonContainer.appendChild(newButton);
+            
+            // Añadir el nuevo contenedor al principio del header
+            header.insertBefore(buttonContainer, header.firstChild);
+            
+            // Ocultar el botón original
+            menuButton.style.display = 'none';
+            
+            // Transferir los event listeners
+            newButton.onclick = function() {
+                // Asumiendo que el botón original está configurado para mostrar/ocultar el offcanvas
+                menuButton.click();
+            };
+        }
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
+    // Crear el fondo oscuro para el offcanvas
+    var backdrop = document.createElement('div');
+    backdrop.className = 'offcanvas-backdrop';
+    document.body.appendChild(backdrop);
+    
+    // Obtener elementos
+    var menuButton = document.getElementById('menu-button');
+    var offcanvas = document.querySelector('.offcanvas');
+    var closeButton = offcanvas.querySelector('button');
+    
+    // Añadir título al offcanvas
+    var title = document.createElement('h2');
+    title.className = 'offcanvas-title';
+    title.textContent = 'Menú de Navegación';
+    offcanvas.insertBefore(title, offcanvas.firstChild);
+    
+    // Función para abrir el offcanvas
+    function openOffcanvas() {
+        offcanvas.classList.add('abierto');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll en el body
+    }
+    
+    // Función para cerrar el offcanvas
+    function closeOffcanvas() {
+        offcanvas.classList.remove('abierto');
+        document.body.style.overflow = ''; // Restaurar scroll
+    }
+    
+    // Event listeners
+    menuButton.addEventListener('click', openOffcanvas);
+    closeButton.addEventListener('click', closeOffcanvas);
+    backdrop.addEventListener('click', closeOffcanvas);
+    
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && offcanvas.classList.contains('abierto')) {
+            closeOffcanvas();
+        }
+    });
+    
+    // Efecto hover avanzado para los elementos del menú
+    var menuItems = offcanvas.querySelectorAll('nav ul li a');
+    menuItems.forEach(function(item) {
+        item.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s ease';
+        });
+    });
+});
+gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray(".gama").forEach((section) => {
+        gsap.from(section, {
+            opacity: 0,
+            y: 60,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: section,
+                start: "top 80%",
+                toggleActions: "play none none none",
+            },
+        });
+    });
+        </script>
+</body>
+</html>
